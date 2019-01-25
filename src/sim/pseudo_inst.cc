@@ -198,7 +198,9 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
         break;
 
       case M5OP_ANNOTATE:
-      case M5OP_RESERVED2:
+      case M5OP_CROSS:
+        crossop(tc, args[0], args[1]);
+        break;
       case M5OP_RESERVED3:
       case M5OP_RESERVED4:
       case M5OP_RESERVED5:
@@ -587,6 +589,15 @@ switchcpu(ThreadContext *tc)
 {
     DPRINTF(PseudoInst, "PseudoInst::switchcpu()\n");
     exitSimLoop("switchcpu");
+}
+
+void
+crossop(ThreadContext *tc, uint64_t arg1, uint64_t arg2)
+{
+    if (!FullSystem) {
+        panicFsOnlyPseudoInst("crossop");
+        return;
+    }
 }
 
 void
