@@ -50,7 +50,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
+#include <iostream>     
+#include <thread>    
+#include <chrono> 
 #include <gem5/asm/generic/m5ops.h>
 
 #include "arch/kernel_stats.hh"
@@ -199,9 +201,9 @@ pseudoInst(ThreadContext *tc, uint8_t func, uint8_t subfunc)
 
       case M5OP_ANNOTATE:
       case M5OP_CROSS:
-        crossop(tc, args[0], args[1]);
-        break;
-      case M5OP_RESERVED3:
+        return crossop(tc, args[0], args[1], args[2], args[3]);
+      
+	  case M5OP_RESERVED3:
       case M5OP_RESERVED4:
       case M5OP_RESERVED5:
         warn("Unimplemented m5 op (0x%x)\n", func);
@@ -591,13 +593,16 @@ switchcpu(ThreadContext *tc)
     exitSimLoop("switchcpu");
 }
 
-void
-crossop(ThreadContext *tc, uint64_t arg1, uint64_t arg2)
+int64_t
+crossop(ThreadContext *tc, int64_t x1, int64_t y1, int64_t x2, int64_t y2)
 {
     if (!FullSystem) {
-        panicFsOnlyPseudoInst("crossop");
-        return;
-    }
+		panicFsOnlyPseudoInst("crossop");
+		return;
+	}
+
+	this_thread::sleep_for(chrono::nanoseconds(100000));
+	return x1 * y2 - x2 * y1;
 }
 
 void

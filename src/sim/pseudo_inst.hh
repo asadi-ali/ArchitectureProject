@@ -86,7 +86,7 @@ void dumpresetstats(ThreadContext *tc, Tick delay, Tick period);
 void m5checkpoint(ThreadContext *tc, Tick delay, Tick period);
 void debugbreak(ThreadContext *tc);
 void switchcpu(ThreadContext *tc);
-void crossop(ThreadContext *tc, uint64_t arg1, uint64_t arg2);
+void crossop(ThreadContext *tc, int64_t x1, int64_t y1, int64_t x2, int64_t y2);
 void workbegin(ThreadContext *tc, uint64_t workid, uint64_t threadid);
 void workend(ThreadContext *tc, uint64_t workid, uint64_t threadid);
 void togglesync(ThreadContext *tc);
