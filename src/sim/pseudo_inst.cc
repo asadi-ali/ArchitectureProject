@@ -595,7 +595,7 @@ switchcpu(ThreadContext *tc)
 int64_t
 crossop(ThreadContext *tc, int64_t x1, int64_t y1, int64_t x2, int64_t y2)
 {
-    this_thread::sleep_for(chrono::nanoseconds(100000));
+    this_thread::sleep_for(chrono::nanoseconds(32 * 20));
     return x1 * y2 - x2 * y1;
 }
 
